@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Rotasol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="rotalsol_logo-removebg-preview.ico" type="image/x-icon">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <a class="logo">
+                    <i class="fas fa-route logo-icon"></i>
+                    <span>Rotasol</span>
+                </a>
+                <p>Painel Administrativo</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#usuarios" class="nav-link" data-section="usuarios">
+                            <i class="fas fa-users"></i>
+                            <span>Usuários</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#doacoes" class="nav-link" data-section="doacoes">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            <span>Doações</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#relatorios" class="nav-link" data-section="relatorios">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Relatórios</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contatos" class="nav-link" data-section="contatos">
+                            <i class="fas fa-envelope"></i>
+                            <span>Contatos</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <p><strong id="adminName">Administrador</strong></p>
+                    <p id="adminEmail">admin@rotasol.com</p>
+                </div>
+                <button id="logoutBtn" class="btn btn-secondary">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <header class="content-header">
+                <div class="header-title">
+                    <h1 id="pageTitle">Usuários</h1>
+                    <p id="pageSubtitle">Gerencie os usuários do sistema</p>
+                </div>
+                
+                <div class="header-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalUsuarios">0</h3>
+                            <p>Total de Usuários</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalDoacoes">0</h3>
+                            <p>Total de Doações</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="valorTotal">R$ 0</h3>
+                            <p>Valor Arrecadado</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="content-body">
+                <section id="usuarios-section" class="content-section active">
+                    <div class="section-header">
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchUsuarios" placeholder="Buscar por nome, email...">
+                        </div>
+                        
+                        <div class="section-actions">
+                            <div class="filter-group">
+                                <select id="filterStatus">
+                                    <option value="">Todos os status</option>
+                                    <option value="ativo">Ativos</option>
+                                    
+                                </select>
+                                
+                                <select id="filterData">
+                                    <option value="">Todas as datas</option>
+                                    <option value="7">Últimos 7 dias</option>
+                                    <option value="30">Últimos 30 dias</option>
+                                    <option value="90">Últimos 90 dias</option>
+                                </select>
+                            </div>
+                            
+                            <button id="exportUsuarios" class="btn btn-secondary">
+                                <i class="fas fa-download"></i> Exportar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="tabelaUsuarios">
+                            <thead>
+                                <tr>
+                                    <th data-sort="nome">Nome <i class="fas fa-sort"></i></th>
+                                    <th data-sort="email">Email <i class="fas fa-sort"></i></th>
+                                    <th data-sort="total_doacoes">Total de Doações <i class="fas fa-sort"></i></th>
+                                    <th data-sort="quantidade_doacoes">Qtd. Doações <i class="fas fa-sort"></i></th>
+                                    <th data-sort="ultimo_acesso">Último Acesso <i class="fas fa-sort"></i></th>
+                                    <th data-sort="data_cadastro">Data de Cadastro <i class="fas fa-sort"></i></th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usuariosTbody">
+                                <tr>
+                                    <td colspan="7" class="loading-text">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        Carregando usuários...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button id="prevPage" class="btn btn-secondary" disabled>
+                            <i class="fas fa-chevron-left"></i> Anterior
+                        </button>
+                        <span id="pageInfo">Página 1 de 1</span>
+                        <button id="nextPage" class="btn btn-secondary" disabled>
+                            Próxima <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </section>
+                
+                <section id="doacoes-section" class="content-section">
+                    <div class="section-header">
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchDoacoes" placeholder="Buscar por tipo, usuário...">
+                        </div>
+                        
+                        <div class="section-actions">
+                            <div class="filter-group">
+                                <select id="filterTipoDoacao">
+                                    <option value="">Todos os tipos</option>
+                                    <option value="Alimentos não perecíveis">Alimentos</option>
+                                    <option value="Roupas">Roupas</option>
+                                    <option value="Produtos de higiene">Higiene</option>
+                                    <option value="Brinquedos">Brinquedos</option>
+                                    <option value="Cobertores">Cobertores</option>
+                                </select>
+                                
+                                <input type="date" id="filterDataDoacao" placeholder="Filtrar por data">
+                            </div>
+                            
+                            <button id="exportDoacoes" class="btn btn-secondary">
+                                <i class="fas fa-download"></i> Exportar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="tabelaDoacoes">
+                            <thead>
+                                <tr>
+                                    <th data-sort="usuario">Usuário <i class="fas fa-sort"></i></th>
+                                    <th data-sort="tipo_doacao">Tipo <i class="fas fa-sort"></i></th>
+                                    <th data-sort="quantidade">Quantidade <i class="fas fa-sort"></i></th>
+                                    <th data-sort="unidade_medida">Unidade <i class="fas fa-sort"></i></th>
+                                    <th data-sort="local">Local <i class="fas fa-sort"></i></th>
+                                    <th data-sort="data_doacao">Data <i class="fas fa-sort"></i></th>
+                                    <th data-sort="status">Status <i class="fas fa-sort"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody id="doacoesTbody">
+                                <tr>
+                                    <td colspan="7" class="loading-text">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        Carregando doações...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button id="prevPageDoacoes" class="btn btn-secondary" disabled>
+                            <i class="fas fa-chevron-left"></i> Anterior
+                        </button>
+                        <span id="pageInfoDoacoes">Página 1 de 1</span>
+                        <button id="nextPageDoacoes" class="btn btn-secondary" disabled>
+                            Próxima <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </section>
+                
+                <section id="relatorios-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Relatórios e Estatísticas</h2>
+                    </div>
+                    
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Doações por Mês</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chartDoacoesMes" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Tipos de Doação</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chartTiposDoacao" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Novos Usuários</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chartNovosUsuarios" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Locais Mais Ativos</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="chartLocaisAtivos" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="report-actions">
+                        <button id="gerarRelatorio" class="btn btn-primary">
+                            <i class="fas fa-file-pdf"></i> Gerar Relatório Completo
+                        </button>
+                    </div>
+                </section>
+                
+                <section id="contatos-section" class="content-section">
+                    <div class="section-header">
+                        <h2>Mensagens de Contato</h2>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="tabelaContatos">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Assunto</th>
+                                    <th>Mensagem</th>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contatosTbody">
+                                <tr>
+                                    <td colspan="7" class="loading-text">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        Carregando mensagens...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalhes do Usuário</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="userModalBody">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

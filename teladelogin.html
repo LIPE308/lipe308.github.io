@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Rotasol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="rotalsol_logo-removebg-preview.ico" type="image/x-icon">
+    <style>
+        :root {
+            --primary: #4a6cf7;
+            --primary-dark: #3a5bd9; 
+            --secondary: #ffce3e;
+            --accent: #6e8efb;
+            --success: #48bb78;
+            --warning: #ecc94b;
+            --danger: #f56565;
+            --dark: #1a202c;
+            --light: #f7fafc;
+            --gray: #718096;
+            --gray-light: #e2e8f0;
+            --text: #2d3748;
+            --text-light: #f8f9fa;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary: #5c7cfa;
+            --primary-dark: #4a6cf7;
+            --secondary: #ffd700;
+            --accent: #7e9afb;
+            --success: #68d391;
+            --warning: #f6e05e;
+            --danger: #fc8181;
+            --dark: #f7fafc;
+            --light: #1a202c;
+            --gray: #a0aec0;
+            --gray-light: #2d3748;
+            --text: #f8f9fa;
+            --text-light: #2d3748;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--light);
+            box-shadow: var(--shadow);
+            padding: 20px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        .theme-toggle {
+            width: 50px;
+            height: 26px;
+            background: var(--gray-light);
+            border-radius: 50px;
+            padding: 3px;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .toggle-handle {
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            border-radius: 50%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .dark-mode .toggle-handle {
+            transform: translateX(24px);
+            background: var(--light);
+        }
+
+        .login-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,192C672,181,768,139,864,138.7C960,139,1056,181,1152,197.3C1248,213,1344,203,1392,197.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: bottom;
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .login-box {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+            
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-logo {
+            margin-bottom: 30px;
+        }
+
+        .login-logo .logo {
+            justify-content: center;
+            font-size: 2.2rem;
+        }
+
+        .login-logo p {
+            margin-top: 10px;
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .login-box h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .login-box .subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius);
+            background: var(--light);
+            color: var(--text);
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input {
+            width: auto;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: var(--gray);
+        }
+
+        .separator::before,
+        .separator::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-light);
+        }
+
+        .separator span {
+            padding: 0 15px;
+        }
+
+        .social-login {
+            margin-bottom: 25px;
+        }
+
+        .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .google-btn:hover {
+            background: #f8f9fa;
+            border-color: #4285f4;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
+
+        .google-btn img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .register-link {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .register-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .alert-error {
+            background: rgba(245, 101, 101, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+
+        .alert-success {
+            background: rgba(72, 187, 120, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        footer {
+            background: var(--dark);
+            color: var(--text-light);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-content p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgb(0, 0, 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        @media (max-width: 768px) {
+            .login-box {
+                padding: 30px 20px;
+            }
+            
+            .login-options {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .forgot-password {
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-section {
+                padding: 40px 0;
+            }
+            
+            .login-box {
+                padding: 25px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a class="logo">
+                    <i class="fas fa-route logo-icon"></i>
+                    <span>Rotasol</span>
+                </a>
+                
+                <div class="nav-actions">
+                    <div class="theme-toggle" id="themeToggle">
+                        <div class="toggle-handle"><i class="fas fa-sun"></i></div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="login-section">
+        <div class="container">
+            <div class="login-container">
+                <div class="login-box">
+                    <div class="login-logo">
+                        <a class="logo">
+                            <i class="fas fa-route logo-icon"></i>
+                            <span>Rotasol</span>
+                        </a>
+                        <p>Transportadora Solidária</p>
+                    </div>
+                    
+                    <h2>Bem-vindo de volta</h2>
+                    <p class="subtitle">Faça login para acessar sua conta</p>
+                    
+                    <div class="alert alert-error" id="errorAlert">
+                        <i class="fas fa-exclamation-circle"></i> <span id="errorMessage">Usuário ou senha inválidos</span>
+                    </div>
+                    
+                    <div class="alert alert-success" id="successAlert">
+                        <i class="fas fa-check-circle"></i> <span id="successMessage">Login realizado com sucesso!</span>
+                    </div>
+                    
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="usuario">Usuário</label>
+                            <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Digite seu usuário" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="senha">Senha</label>
+                            <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha" required>
+                        </div>
+                        
+                        <div class="login-options">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember" name="remember">
+                                <label for="remember">Lembrar-me</label>
+                            </div>
+                            <a href="#" class="forgot-password">Esqueceu a senha?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-sign-in-alt"></i> Entrar
+                        </button>
+                    </form>
+                    
+                    <div class="separator">
+                        <span>Ou</span>
+                    </div>
+                    
+                    <div class="social-login">
+    <a href="/auth/google?prompt=select_account" class="google-btn">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google">
+        Continuar com Google
+    </a>
+</div>
+                    <div class="register-link">
+                        Não tem uma conta? <a href="#" id="showRegister">Cadastre-se</a>
+                    </div>
+                </div>
+                
+                <div class="login-box" id="registerBox" style="display: none; margin-top: 30px;">
+                    <h2>Criar Conta</h2>
+                    <p class="subtitle">Junte-se à nossa rede solidária</p>
+                    
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="nome_completo">Nome Completo</label>
+                            <input type="text" id="nome_completo" name="nome_completo" class="form-control" placeholder="Digite seu nome completo" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu e-mail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reg_usuario">Usuário</label>
+                            <input type="text" id="reg_usuario" name="usuario" class="form-control" placeholder="Escolha um nome de usuário" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reg_senha">Senha</label>
+                            <input type="password" id="reg_senha" name="senha" class="form-control" placeholder="Crie uma senha segura" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm_senha">Confirmar Senha</label>
+                            <input type="password" id="confirm_senha" name="confirm_senha" class="form-control" placeholder="Digite a senha novamente" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i> Criar Conta
+                        </button>
+                    </form>
+                    
+                    <div class="register-link">
+                        Já tem uma conta? <a href="#" id="showLogin">Fazer login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <p>© 2025 Rotasol - Transportadora Solidária. Todos os direitos reservados.</p>
+                <p>Desenvolvido por 308 Studios</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            themeToggle.querySelector('.toggle-handle i').className = 'fas fa-moon';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            const icon = themeToggle.querySelector('.toggle-handle i');
+            if (body.classList.contains('dark-mode')) {
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        const showRegisterBtn = document.getElementById('showRegister');
+        const showLoginBtn = document.getElementById('showLogin');
+        const loginBox = document.querySelector('.login-box:first-of-type');
+        const registerBox = document.getElementById('registerBox');
+        
+        showRegisterBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginBox.style.display = 'none';
+            registerBox.style.display = 'block';
+        });
+        
+        showLoginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerBox.style.display = 'none';
+            loginBox.style.display = 'block';
+        });
+
+        const errorAlert = document.getElementById('errorAlert');
+        const successAlert = document.getElementById('successAlert');
+        
+        function showAlert(alertElement, message) {
+            alertElement.querySelector('span').textContent = message;
+            alertElement.style.display = 'flex';
+            setTimeout(() => {
+                alertElement.style.display = 'none';
+            }, 5000);
+        }
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const usuario = e.target.usuario.value;
+    const senha = e.target.senha.value;
+    
+    try {
+        const resp = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ usuario, senha })
+        });
+        
+        if (resp.ok) {
+            const data = await resp.json();
+            
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("usuario", data.user.usuario);
+            localStorage.setItem("nome", data.user.nome);
+            localStorage.setItem("email", data.user.email);
+            
+            showAlert(successAlert, 'Login realizado com sucesso!');
+            setTimeout(() => {
+                window.location.href = 'paginainicial.html';
+            }, 1000);
+        } else {
+            const erro = await resp.json();
+            showAlert(errorAlert, erro.error || 'Usuário ou senha inválidos');
+        }
+    } catch (err) {
+        console.error('Erro ao conectar ao servidor:', err);
+        showAlert(errorAlert, 'Erro ao conectar ao servidor. Tente novamente.');
+    }
+});
+
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const senha = e.target.senha.value;
+    const confirmSenha = e.target.confirm_senha.value;
+    
+    if (senha !== confirmSenha) {
+        showAlert(errorAlert, 'As senhas não coincidem.');
+        return;
+    }
+    
+    const dados = {
+        nome_completo: e.target.nome_completo.value,
+        email: e.target.email.value,
+        usuario: e.target.usuario.value,
+        senha: senha
+    };
+    
+    try {
+        const resp = await fetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        });
+        
+        if (resp.ok) {
+            showAlert(successAlert, 'Conta criada com sucesso! Faça login para continuar.');
+            registerBox.style.display = 'none';
+            loginBox.style.display = 'block';
+            e.target.reset();
+        } else {
+            const erro = await resp.json();
+            showAlert(errorAlert, erro.error || 'Erro ao criar conta. Tente novamente.');
+        }
+    } catch (err) {
+        console.error('Erro ao conectar ao servidor:', err);
+        showAlert(errorAlert, 'Erro ao conectar ao servidor. Tente novamente.');
+    }
+});
+
+function checkExistingLogin() {
+    const token = localStorage.getItem('token');
+    if (token) {
+        fetch('/api/me', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = 'paginainicial.html';
+            } else {
+                localStorage.removeItem('token');
+                localStorage.removeItem('usuario');
+                localStorage.removeItem('nome');
+                localStorage.removeItem('foto');
+            }
+        })
+        .catch(() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('usuario');
+            localStorage.removeItem('nome');
+            localStorage.removeItem('foto');
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', checkExistingLogin);
+    </script>
+</body>
+</html>

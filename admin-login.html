@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Administrativo - Rotasol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="rotalsol_logo-removebg-preview.ico" type="image/x-icon">
+    <style>
+        :root {
+            --primary: #4a6cf7;
+            --primary-dark: #3a5bd9;
+            --secondary: #ffce3e;
+            --accent: #6e8efb;
+            --success: #48bb78;
+            --warning: #ecc94b;
+            --danger: #f56565;
+            --dark: #1a202c;
+            --light: #f7fafc;
+            --gray: #718096;
+            --gray-light: #e2e8f0;
+            --text: #2d3748;
+            --text-light: #f8f9fa;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-box {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-logo {
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        .login-box h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .login-box .subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius);
+            background: var(--light);
+            color: var(--text);
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .alert-error {
+            background: rgba(245, 101, 101, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+
+        .alert-success {
+            background: rgba(72, 187, 120, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .back-link {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .back-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .loading-spinner {
+            display: none;
+        }
+
+        .loading-spinner.active {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-logo">
+                <a class="logo">
+                    <i class="fas fa-route logo-icon"></i>
+                    <span>Rotasol</span>
+                </a>
+                <p>Painel Administrativo</p>
+            </div>
+            
+            <h2>Acesso Restrito</h2>
+            <p class="subtitle">Faça login como administrador</p>
+            
+            <div class="alert alert-error" id="errorAlert">
+                <i class="fas fa-exclamation-circle"></i> <span id="errorMessage">Credenciais inválidas</span>
+            </div>
+
+            <div class="alert alert-success" id="successAlert">
+                <i class="fas fa-check-circle"></i> <span id="successMessage">Login realizado com sucesso!</span>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="usuario">Usuário</label>
+                    <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Digite seu usuário" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    <i class="fas fa-spinner loading-spinner" id="loadingSpinner"></i>
+                    <i class="fas fa-sign-in-alt" id="loginIcon"></i>
+                    <span id="submitText">Entrar</span>
+                </button>
+            </form>
+            
+            <div class="back-link">
+                <a href="paginainicial.html"><i class="fas fa-arrow-left"></i> Voltar ao site principal</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const loginIcon = document.getElementById('loginIcon');
+        const submitText = document.getElementById('submitText');
+        const errorAlert = document.getElementById('errorAlert');
+        const successAlert = document.getElementById('successAlert');
+
+        function showAlert(alertElement, message, isSuccess = false) {
+            const messageElement = alertElement.querySelector('span');
+            messageElement.textContent = message;
+            
+            const icon = alertElement.querySelector('i');
+            if (isSuccess) {
+                icon.className = 'fas fa-check-circle';
+                alertElement.className = 'alert alert-success';
+            } else {
+                icon.className = 'fas fa-exclamation-circle';
+                alertElement.className = 'alert alert-error';
+            }
+            
+            alertElement.style.display = 'flex';
+            setTimeout(() => {
+                alertElement.style.display = 'none';
+            }, 5000);
+        }
+
+        function setLoading(isLoading) {
+            if (isLoading) {
+                loadingSpinner.classList.add('active');
+                loginIcon.style.display = 'none';
+                submitText.textContent = 'Entrando...';
+                submitBtn.disabled = true;
+            } else {
+                loadingSpinner.classList.remove('active');
+                loginIcon.style.display = 'inline-block';
+                submitText.textContent = 'Entrar';
+                submitBtn.disabled = false;
+            }
+        }
+
+        function checkExistingAdminLogin() {
+            const token = localStorage.getItem('adminToken');
+            const adminUsuario = localStorage.getItem('adminUsuario');
+            
+            if (token && adminUsuario) {
+                console.log('🔍 Admin já logado, verificando token...');
+                
+                fetch('/api/admin/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('✅ Token válido, redirecionando para painel...');
+                        window.location.href = 'admin-painel.html';
+                    } else {
+                        console.log('❌ Token inválido, limpando storage...');
+                        localStorage.removeItem('adminToken');
+                        localStorage.removeItem('adminUsuario');
+                    }
+                })
+                .catch(error => {
+                    console.error('❌ Erro ao verificar token:', error);
+                    localStorage.removeItem('adminToken');
+                    localStorage.removeItem('adminUsuario');
+                });
+            }
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const usuario = document.getElementById('usuario').value;
+            const senha = document.getElementById('senha').value;
+            
+            console.log('🔐 Tentando login admin:', usuario);
+            
+            if (!usuario || !senha) {
+                showAlert(errorAlert, 'Por favor, preencha todos os campos.');
+                return;
+            }
+            
+            setLoading(true);
+            
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ usuario, senha })
+                });
+                
+                console.log('📡 Resposta do servidor:', response.status);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ Login bem-sucedido:', data);
+                    
+                    localStorage.setItem('adminToken', data.token);
+                    localStorage.setItem('adminUsuario', data.admin.usuario);
+                    
+                    showAlert(successAlert, 'Login realizado com sucesso! Redirecionando...', true);
+                    
+                    setTimeout(() => {
+                        window.location.href = 'admin-painel.html';
+                    }, 1000);
+                    
+                } else {
+                    const errorData = await response.json();
+                    console.error('❌ Erro no login:', errorData);
+                    showAlert(errorAlert, errorData.error || 'Credenciais inválidas');
+                }
+            } catch (error) {
+                console.error('💥 Erro de conexão:', error);
+                showAlert(errorAlert, 'Erro ao conectar ao servidor. Verifique se o servidor está rodando.');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', checkExistingAdminLogin);
+
+        checkExistingAdminLogin();
+    </script>
+</body>
+</html>

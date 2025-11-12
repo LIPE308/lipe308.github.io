@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Bem-sucedido - Rotasol</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4a6cf7 0%, #6e8efb 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .success-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .loading {
+            font-size: 18px;
+            color: #4a6cf7;
+            margin-bottom: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4a6cf7;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .user-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: left;
+        }
+        
+        .user-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="spinner"></div>
+        <div class="loading">Processando login...</div>
+        
+        <div class="user-info" id="userInfo" style="display: none;">
+            <h4>Login realizado com:</h4>
+            <p><strong id="userName"></strong></p>
+            <p id="userEmail"></p>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        const nome = urlParams.get('nome');
+        const email = urlParams.get('email');
+        const foto = urlParams.get('foto');
+
+        if (token) {
+            if (nome) {
+                document.getElementById('userName').textContent = nome;
+                document.getElementById('userEmail').textContent = email;
+                document.getElementById('userInfo').style.display = 'block';
+            }
+            localStorage.setItem('token', token);
+            localStorage.setItem('usuario', nome || 'Usuário Google');
+            localStorage.setItem('nome', nome || 'Usuário Google');
+            localStorage.setItem('email', email || '');
+            if (foto) {
+                localStorage.setItem('foto', foto);
+            }
+            
+            console.log('✅ Login salvo no localStorage');
+
+            setTimeout(() => {
+                window.location.href = 'paginainicial.html';
+            }, 2000);
+        } else {
+            console.error('❌ Token não recebido');
+            setTimeout(() => {
+                window.location.href = 'teladelogin.html?error=google_failed';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
